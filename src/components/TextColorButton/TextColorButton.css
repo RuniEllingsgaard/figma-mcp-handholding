@@ -1,0 +1,22 @@
+.text-color-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 48px;
+  width: 48px;
+  background-color: #FFFFFF;
+  border: 1px solid #EDEDED;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.text-color-button:hover {
+  background-color: #F5F5F5;
+}
+
+.text-color-button__dot {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+} 

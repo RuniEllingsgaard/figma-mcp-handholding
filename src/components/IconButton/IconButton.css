@@ -1,0 +1,32 @@
+.icon-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  min-width: 48px;
+  min-height: 48px;
+  background-color: white;
+  border: 1px solid #EDEDED;
+  border-radius: 8px;
+  padding: 4px;
+  transition: background-color 0.2s ease;
+  cursor: pointer;
+}
+
+.icon-button:hover {
+  background-color: #f9fafb;
+}
+
+.icon-button:active {
+  background-color: #f3f4f6;
+}
+
+.icon-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.icon-button:disabled:hover {
+  background-color: white;
+} 

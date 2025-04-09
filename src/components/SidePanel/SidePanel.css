@@ -1,0 +1,15 @@
+.side-panel {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 280px;
+  height: calc(100vh - 64px);
+  padding: 32px;
+}
+
+.side-panel-content {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  width: 100%;
+} 

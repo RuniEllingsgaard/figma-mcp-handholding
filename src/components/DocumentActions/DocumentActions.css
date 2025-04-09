@@ -1,0 +1,4 @@
+.document-actions-container{
+    display: flex;
+    gap: 8px;
+}

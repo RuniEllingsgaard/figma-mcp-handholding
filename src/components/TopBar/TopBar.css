@@ -1,0 +1,55 @@
+.top-bar {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.spaces-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.space-indicators {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.space-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: #3C3C3C;
+}
+
+.space-dot:not(.active) {
+  opacity: 0.3;
+}
+
+.add-button {
+  width: 24px;
+  height: 24px;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.plus-icon {
+  width: 16px;
+  height: 16px;
+}
+
+.space-title {
+  font-family: 'Matter Mono TRIAL', monospace;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.2em;
+  color: #000000;
+  opacity: 0.4;
+  width: 100%;
+} 
