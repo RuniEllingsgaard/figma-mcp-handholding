@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from './Document.module.css';
+import './Document.css';
 import DocumentTop from '../DocumentTop/DocumentTop';
 import DocumentBottom from '../DocumentBottom/DocumentBottom';
 
@@ -23,12 +23,12 @@ export const Document: React.FC<DocumentProps> = ({
   activeDocumentTitle = ''
 }) => {
   return (
-    <div className={styles.document}>
-      <div className={styles.container}>
+    <div className="document">
+      <div className="container">
         <DocumentTop spaceTitle={spaceTitle} activeDocumentTitle={activeDocumentTitle} />
-        <div className={styles.content}>
+        <div className="content">
           <textarea
-            className={styles.textarea}
+            className="textarea"
             placeholder={placeholder}
             value={content}
             onChange={(e) => onChange?.(e.target.value)}
