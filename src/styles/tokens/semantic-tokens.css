@@ -1,0 +1,20 @@
+:root {
+  --text-text-primary: var(--neutrals-white);
+  --text-text-secondary: var(--neutrals-grey-dark);
+  --text-text-inverse: var(--neutrals-black);
+  --icon-icon-primary: var(--neutrals-white);
+  --icon-icon-secondary: var(--neutrals-grey-dark);
+  --icon-icon-inverse: var(--neutrals-black);
+  --border-border-primary: var(--neutrals-grey-300);
+  --radii-radii-primary: var(--number-medium);
+  --spacing-spacing-small: var(--number-small);
+  --spacing-spacing-medium: var(--number-medium);
+  --spacing-spacing-medium-large: var(--number-medium-large);
+  --spacing-spacing-large: var(--number-large);
+  --spacing-spacing-xl: var(--number-xl);
+  --spacing-spacing-xxl: var(--number-xxl);
+  --surface-surface-primary: var(--neutrals-white);
+  --surface-surface-secondary: var(--neutrals-grey-200);
+  --action-action-hover: var(--neutrals-grey-100);
+  --action-action-active: var(--neutrals-grey-300);
+} 

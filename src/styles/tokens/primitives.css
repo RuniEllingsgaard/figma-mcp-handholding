@@ -1,0 +1,16 @@
+:root {
+  --neutrals-white: #ffffff;
+  --neutrals-black: #000000;
+  --neutrals-grey-100: #F9FAFB;
+  --neutrals-grey-200: #f5f5f5;
+  --neutrals-grey-300: #EDEDED;
+  --neutrals-grey-400: #939393;
+  --number-small: 0.25rem;
+  --number-medium: 0.5rem;
+  --number-medium-large: 1rem;
+  --number-large: 1.5rem;
+  --number-xl: 2rem;
+  --number-xxl: 3rem;
+
+ 
+} 
