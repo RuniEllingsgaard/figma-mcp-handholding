@@ -1,7 +1,12 @@
 import './App.css'
+import './styles/auth.css'
 import SidePanel from './components/SidePanel/SidePanel'
 import { Document } from './components/Document/Document'
 import { useState } from 'react'
+import { useAuthState } from 'react-firebase-hooks/auth';
+import { auth } from './firebase/config';
+import { AuthStatus } from './components/Auth/AuthStatus'
+import { GoogleSignIn } from './components/Auth/GoogleSignIn'
 
 // Define the shape of our document data structure
 interface DocumentData {
@@ -10,6 +15,7 @@ interface DocumentData {
 }
 
 function App() {
+  const [user, loading] = useAuthState(auth);
   // Initialize state for documents array and currently active document index
   const [documents, setDocuments] = useState<DocumentData[]>([
     { title: "Journal", content: "" },
@@ -47,9 +53,27 @@ function App() {
     }
   };
 
+  if (loading) {
+    return <div className="auth-container">Loading...</div>;
+  }
+
+  if (!user) {
+    return (
+      <div className='login-view-container'>
+        <div className="auth-container">
+          <h1>Login or signup <mark>to start writing</mark></h1>
+          <div className="auth-forms">
+            <GoogleSignIn />
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <>
       <div className='default-container'>
+        <AuthStatus />
         {/* SidePanel component for document navigation and management */}
         <SidePanel 
           spaceTitle="My Space" 
