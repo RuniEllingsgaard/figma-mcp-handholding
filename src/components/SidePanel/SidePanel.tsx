@@ -13,6 +13,7 @@ export interface SidePanelProps {
   onSearch?: () => void;
   onProfileClick?: () => void;
   onActiveItemChange: (index: number) => void;
+  isLoading?: boolean;
 }
 
 export const SidePanel: React.FC<SidePanelProps> = ({
@@ -24,6 +25,7 @@ export const SidePanel: React.FC<SidePanelProps> = ({
   onSearch,
   onProfileClick,
   onActiveItemChange,
+  isLoading = false,
 }) => {
   return (
     <div className="side-panel">
@@ -40,6 +42,7 @@ export const SidePanel: React.FC<SidePanelProps> = ({
           onAddClick={onAddDocument}
           onSearchClick={onSearch}
           onGridClick={onProfileClick}
+          disabled={isLoading}
         />
     </div>
   );

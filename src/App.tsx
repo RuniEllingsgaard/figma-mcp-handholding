@@ -2,54 +2,101 @@ import './App.css'
 import './styles/auth.css'
 import SidePanel from './components/SidePanel/SidePanel'
 import { Document } from './components/Document/Document'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from './firebase/config';
 import { AuthStatus } from './components/Auth/AuthStatus'
 import { GoogleSignIn } from './components/Auth/GoogleSignIn'
+import { documentService } from './firebase/documentService';
 
 // Define the shape of our document data structure
 interface DocumentData {
+  id?: string;
   title: string;
   content: string;
+  userId?: string;
 }
 
 function App() {
   const [user, loading] = useAuthState(auth);
   // Initialize state for documents array and currently active document index
-  const [documents, setDocuments] = useState<DocumentData[]>([
-    { title: "Journal", content: "" },
-    { title: "People I'll miss", content: "" },
-    { title: "Book reviews", content: "" },
-  ]);
+  const [documents, setDocuments] = useState<DocumentData[]>([]);
   const [activeIndex, setActiveIndex] = useState<number>(0);
 
+  // Fetch documents when user is authenticated
+  useEffect(() => {
+    const fetchDocuments = async () => {
+      if (user) {
+        try {
+          const docs = await documentService.getAllDocuments(user.uid);
+          setDocuments(docs);
+        } catch (error) {
+          console.error('Error fetching documents:', error);
+        }
+      }
+    };
+
+    fetchDocuments();
+  }, [user]);
+
   // Handler to add a new document to the list
-  const handleAddDocument = () => {
-    const newDocumentTitle = `Untitled ${documents.length + 1}`;
-    setDocuments([...documents, { title: newDocumentTitle, content: "" }]);
+  const handleAddDocument = async () => {
+    if (!user) return;
+
+    try {
+      const newDocument = await documentService.createDocument({
+        title: "Untitled",
+        content: "",
+        userId: user.uid
+      });
+      
+      setDocuments([...documents, newDocument]);
+      // Set the active index to the new document
+      setActiveIndex(documents.length);
+    } catch (error) {
+      console.error('Error creating document:', error);
+    }
   };
 
   // Handler to delete the currently active document
-  const handleDeleteDocument = () => {
+  const handleDeleteDocument = async () => {
     if (activeIndex >= 0 && activeIndex < documents.length) {
-      const newDocuments = [...documents];
-      newDocuments.splice(activeIndex, 1);
-      setDocuments(newDocuments);
-      // Update active index to previous document or first document if deleting first item
-      setActiveIndex(Math.max(0, activeIndex - 1));
+      const documentToDelete = documents[activeIndex];
+      if (!documentToDelete.id) return;
+
+      try {
+        await documentService.deleteDocument(documentToDelete.id);
+        const newDocuments = [...documents];
+        newDocuments.splice(activeIndex, 1);
+        setDocuments(newDocuments);
+        // Update active index to previous document or first document if deleting first item
+        setActiveIndex(Math.max(0, activeIndex - 1));
+      } catch (error) {
+        console.error('Error deleting document:', error);
+      }
     }
   };
 
   // Handler to update the content of the currently active document
-  const handleContentChange = (newContent: string) => {
+  const handleContentChange = async (newContent: string) => {
     if (activeIndex >= 0 && activeIndex < documents.length) {
-      const newDocuments = [...documents];
-      newDocuments[activeIndex] = {
-        ...newDocuments[activeIndex],
-        content: newContent
-      };
-      setDocuments(newDocuments);
+      const documentToUpdate = documents[activeIndex];
+      if (!documentToUpdate.id) return;
+
+      try {
+        const updatedDoc = await documentService.updateDocument(documentToUpdate.id, {
+          content: newContent
+        });
+        
+        const newDocuments = [...documents];
+        newDocuments[activeIndex] = {
+          ...newDocuments[activeIndex],
+          content: newContent
+        };
+        setDocuments(newDocuments);
+      } catch (error) {
+        console.error('Error updating document:', error);
+      }
     }
   };
 
