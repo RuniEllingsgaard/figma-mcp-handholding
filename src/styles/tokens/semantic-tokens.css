@@ -1,12 +1,13 @@
 :root {
-  --text-text-primary: var(--neutrals-white);
-  --text-text-secondary: var(--neutrals-grey-dark);
-  --text-text-inverse: var(--neutrals-black);
+  --text-text-primary: var(--neutrals-black);
+  --text-text-secondary: var(--neutrals-grey-400);
+  --text-text-inverse: var(--neutrals-white);
   --icon-icon-primary: var(--neutrals-white);
   --icon-icon-secondary: var(--neutrals-grey-dark);
   --icon-icon-inverse: var(--neutrals-black);
   --border-border-primary: var(--neutrals-grey-300);
   --radii-radii-primary: var(--number-medium);
+  --radii-radii-secondary: var(--number-medium-large);
   --spacing-spacing-small: var(--number-small);
   --spacing-spacing-medium: var(--number-medium);
   --spacing-spacing-medium-large: var(--number-medium-large);

@@ -1,18 +1,17 @@
 .document-item {
   display: flex;
   align-items: center;
-  width: 217px;
-  gap: 8px;
-  padding: 4px;
+  width: 100%;
+  gap: var(--spacing-spacing-medium);
+  padding: var(--spacing-spacing-small);
   cursor: pointer;
-  border-radius: 5px;
 }
 
 .document-item__dot {
-  width: 6px;
-  height: 6px;
+  width: var(--spacing-spacing-small);
+  height: var(--spacing-spacing-small);
   border-radius: 50%;
-  background-color: #2A2A2A;
+  background-color: var(--text-text-primary);
   opacity: 0;
   transform: scale(0);
   transition: transform 0.3s ease, opacity 0.3s ease;
@@ -31,7 +30,7 @@
   font-size: 20px;
   font-weight: 400;
   line-height: 1.2;
-  color: #939393;
+  color: var(--text-text-secondary);
   transition: margin-left 0.4s ease, color 0.4s ease;
   white-space: nowrap;
   overflow: hidden;
@@ -42,7 +41,7 @@
 }
 
 .document-item.active .document-item__title {
-  color: #2A2A2A;
+  color: var(--text-text-primary);
   gap: 0px;
   margin-left: 2px;
   transition: margin-left 0.4s ease, color 0.4s ease;

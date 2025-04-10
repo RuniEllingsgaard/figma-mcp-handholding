@@ -3,25 +3,22 @@
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  gap: 8px;
-  padding: 0px 16px;
-  background-color: #F4F4F4;
-  border-radius: 8px;
+  gap: var(--spacing-spacing-medium);
+  padding: 0px var(--spacing-spacing-medium-large);
+  background-color: var(--surface-surface-secondary);
+  border-radius: var(--radii-radii-primary);
   width: fit-content;
-  height: 48px;
+  height: 40px;
 }
 
-.document-tag-icon {
-  width: 20px;
-  height: 20px;
-}
+
 
 .document-tag-label {
   font-family: 'Matter Mono TRIAL', monospace;
   font-weight: 400;
   font-size: 12px;
   line-height: 1.2em;
-  color: #000000;
+  color: var(--text-text-primary);
   padding-top: 3px;
   text-transform: uppercase;
 } 

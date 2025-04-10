@@ -1,6 +1,6 @@
 .document-item-list {
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: var(--spacing-spacing-medium-large);
   width: 100%;
 } 
