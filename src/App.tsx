@@ -5,9 +5,9 @@ import { Document } from './components/Document/Document'
 import { useEffect, useState } from 'react'
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from './firebase/config';
-import { AuthStatus } from './components/Auth/AuthStatus'
 import { GoogleSignIn } from './components/Auth/GoogleSignIn'
 import { documentService } from './firebase/documentService';
+import React from 'react';
 
 // Define the shape of our document data structure
 interface DocumentData {
@@ -22,6 +22,9 @@ function App() {
   // Initialize state for documents array and currently active document index
   const [documents, setDocuments] = useState<DocumentData[]>([]);
   const [activeIndex, setActiveIndex] = useState<number>(0);
+
+  // Create a debounced update function using a timeout
+  const [updateTimeout, setUpdateTimeout] = React.useState<NodeJS.Timeout | null>(null);
 
   // Fetch documents when user is authenticated
   useEffect(() => {
@@ -77,28 +80,48 @@ function App() {
     }
   };
 
-  // Handler to update the content of the currently active document
-  const handleContentChange = async (newContent: string) => {
+  // Update the content change handler
+  const handleContentChange = (newContent: string) => {
     if (activeIndex >= 0 && activeIndex < documents.length) {
       const documentToUpdate = documents[activeIndex];
       if (!documentToUpdate.id) return;
 
-      try {
-        const updatedDoc = await documentService.updateDocument(documentToUpdate.id, {
-          content: newContent
-        });
-        
-        const newDocuments = [...documents];
-        newDocuments[activeIndex] = {
-          ...newDocuments[activeIndex],
-          content: newContent
-        };
-        setDocuments(newDocuments);
-      } catch (error) {
-        console.error('Error updating document:', error);
+      // Update local state immediately
+      const newDocuments = [...documents];
+      newDocuments[activeIndex] = {
+        ...newDocuments[activeIndex],
+        content: newContent
+      };
+      setDocuments(newDocuments);
+
+      // Clear any existing timeout
+      if (updateTimeout) {
+        clearTimeout(updateTimeout);
       }
+
+      // Set a new timeout for the Firebase update
+      const timeout = setTimeout(async () => {
+        try {
+          await documentService.updateDocument(documentToUpdate.id!, {
+            content: newContent
+          });
+        } catch (error) {
+          console.error('Error updating document:', error);
+        }
+      }, 5000); // Wait 5 seconds after the last keystroke before updating Firebase
+
+      setUpdateTimeout(timeout);
     }
   };
+
+  // Clean up the timeout when component unmounts
+  React.useEffect(() => {
+    return () => {
+      if (updateTimeout) {
+        clearTimeout(updateTimeout);
+      }
+    };
+  }, [updateTimeout]);
 
   if (loading) {
     return <div className="auth-container">Loading...</div>;
@@ -120,8 +143,6 @@ function App() {
   return (
     <>
       <div className='default-container'>
-        <AuthStatus />
-        {/* SidePanel component for document navigation and management */}
         <SidePanel 
           spaceTitle="My Space" 
           documentItems={documents.map(doc => doc.title)}
@@ -129,7 +150,6 @@ function App() {
           onActiveItemChange={setActiveIndex}
           onAddDocument={handleAddDocument}
         />
-        {/* Document component for displaying and editing the active document */}
         <Document 
           content={activeIndex >= 0 && activeIndex < documents.length ? documents[activeIndex].content : ""}
           onChange={handleContentChange}

@@ -10,7 +10,6 @@ export interface SidePanelProps {
   activeIndex: number;
   onAddDocument: () => void;
   onAddSpace?: () => void;
-  onSearch?: () => void;
   onProfileClick?: () => void;
   onActiveItemChange: (index: number) => void;
   isLoading?: boolean;
@@ -22,7 +21,6 @@ export const SidePanel: React.FC<SidePanelProps> = ({
   activeIndex,
   onAddDocument,
   onAddSpace,
-  onSearch,
   onProfileClick,
   onActiveItemChange,
   isLoading = false,
@@ -40,9 +38,8 @@ export const SidePanel: React.FC<SidePanelProps> = ({
         />
         <BottomBar 
           onAddClick={onAddDocument}
-          onSearchClick={onSearch}
           onGridClick={onProfileClick}
-          disabled={isLoading}
+          //disabled={isLoading}
         />
     </div>
   );
